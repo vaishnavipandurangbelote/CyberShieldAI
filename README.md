@@ -2,8 +2,14 @@
 
 ### An AI-Powered Unified Cybersecurity Protection Platform
 
-\<p align="center">   \<img src="[https://img.shields.io/badge/Python-3.x-blue?logo=python&logoColor=white](https://img.shields.io/badge/Python-3.x-blue?logo=python\&logoColor=white)" alt="Python"/>   \<img src="[https://img.shields.io/badge/Flask-Web%20Framework-black?logo=flask](https://img.shields.io/badge/Flask-Web%20Framework-black?logo=flask)" alt="Flask"/>   \<img src="[https://img.shields.io/badge/SQLite-Database-blue?logo=sqlite&logoColor=white](https://img.shields.io/badge/SQLite-Database-blue?logo=sqlite\&logoColor=white)" alt="SQLite"/>   \<img src="[https://img.shields.io/badge/Scikit--learn-Machine%20Learning-orange?logo=scikitlearn&logoColor=white](https://img.shields.io/badge/Scikit--learn-Machine%20Learning-orange?logo=scikitlearn\&logoColor=white)" alt="Scikit-learn"/>   \<img src="[https://img.shields.io/badge/Bootstrap-Frontend-7952B3?logo=bootstrap&logoColor=white](https://img.shields.io/badge/Bootstrap-Frontend-7952B3?logo=bootstrap\&logoColor=white)" alt="Bootstrap"/>   \<img src="[https://img.shields.io/badge/Status-Developed-success](https://img.shields.io/badge/Status-Developed-success)" alt="Project Status"/> \</p>
-
+<p align="center">
+  <img src="https://img.shields.io/badge/Python-3.x-blue?logo=python&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Flask-Web%20Framework-black?logo=flask"/>
+  <img src="https://img.shields.io/badge/SQLite-Database-blue?logo=sqlite&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Scikit--learn-Machine%20Learning-orange?logo=scikitlearn&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Bootstrap-Frontend-7952B3?logo=bootstrap&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Status-Developed-success"/>
+</p>
 ---
 
 ## 🌐 Overview
