@@ -183,4 +183,8 @@ http://127.0.0.1:5000/
 
 ---
 
-\<p align="center">   \<b>🛡️ CyberShield AI — Making Digital Security Smarter.\</b>   \<br/>   \<sub>Built with Python, Flask, and a focus on cybersecurity.\</sub> \</p>
+<p align="center">
+  <b>🛡️ CyberShield AI — Making Digital Security Smarter.</b>
+  <br/>
+  <sub>Developed with Python, Flask, and modern cybersecurity technologies.</sub>
+</p>
