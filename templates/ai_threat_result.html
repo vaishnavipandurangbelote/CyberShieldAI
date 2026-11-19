@@ -1,0 +1,286 @@
+{% extends "base.html" %}
+
+{% block title %}
+CyberShield AI - AI Threat Analysis Result
+{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <!-- Back -->
+    <div class="mb-4">
+
+        <a href="/ai-threat-analysis"
+           class="btn btn-outline-secondary">
+            ← Back to AI Threat Analysis
+        </a>
+
+        <a href="/"
+           class="btn btn-outline-secondary ms-2">
+            Dashboard
+        </a>
+
+    </div>
+
+
+    <!-- Header -->
+    <div class="text-center mb-5">
+
+        <h1 class="fw-bold">
+            🤖 AI Threat Analysis Result
+        </h1>
+
+        <p class="text-muted">
+            CyberShield AI security assessment
+        </p>
+
+    </div>
+
+
+    <!-- Threat Overview -->
+    <div class="row g-4 mb-4">
+
+        <!-- Threat Score -->
+        <div class="col-md-4">
+
+            <div class="card shadow-sm h-100 text-center p-4">
+
+                <h5 class="text-muted">
+                    Threat Score
+                </h5>
+
+                <div class="display-3 fw-bold">
+
+                    {{ result.threat_score }}
+
+                    <span class="fs-4">
+                        /100
+                    </span>
+
+                </div>
+
+                <p class="mb-0 text-muted">
+                    Overall security risk score
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- Threat Level -->
+        <div class="col-md-4">
+
+            <div class="card shadow-sm h-100 text-center p-4">
+
+                <h5 class="text-muted">
+                    Threat Level
+                </h5>
+
+                {% if result.threat_level == "Critical" %}
+
+                    <span class="badge bg-danger fs-5 p-3">
+                        Critical
+                    </span>
+
+                {% elif result.threat_level == "High" %}
+
+                    <span class="badge bg-danger fs-5 p-3">
+                        High
+                    </span>
+
+                {% elif result.threat_level == "Medium" %}
+
+                    <span class="badge bg-warning text-dark fs-5 p-3">
+                        Medium
+                    </span>
+
+                {% else %}
+
+                    <span class="badge bg-success fs-5 p-3">
+                        Low
+                    </span>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+
+        <!-- Priority -->
+        <div class="col-md-4">
+
+            <div class="card shadow-sm h-100 text-center p-4">
+
+                <h5 class="text-muted">
+                    Priority
+                </h5>
+
+                <h3 class="fw-bold mt-2">
+                    {{ result.priority }}
+                </h3>
+
+                <p class="text-muted mb-0">
+                    Recommended response priority
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Analysis Summary -->
+    <div class="card shadow-sm p-4 mb-4">
+
+        <h4 class="fw-bold mb-3">
+            🧠 Threat Assessment
+        </h4>
+
+        <div class="alert alert-info mb-0">
+
+            {{ result.summary }}
+
+        </div>
+
+    </div>
+
+
+    <!-- Detected Threats -->
+    <div class="card shadow-sm p-4 mb-4">
+
+        <h4 class="fw-bold mb-3">
+            🚨 Detected Threats
+        </h4>
+
+        {% if result.threats %}
+
+            <ul class="list-group">
+
+                {% for threat in result.threats %}
+
+                    <li class="list-group-item">
+
+                        ⚠️ {{ threat }}
+
+                    </li>
+
+                {% endfor %}
+
+            </ul>
+
+        {% else %}
+
+            <p class="text-muted">
+                No significant threats identified.
+            </p>
+
+        {% endif %}
+
+    </div>
+
+
+    <!-- Security Indicators -->
+    <div class="card shadow-sm p-4 mb-4">
+
+        <h4 class="fw-bold mb-3">
+            🔎 Security Indicators
+        </h4>
+
+        {% if result.indicators %}
+
+            <ul class="list-group">
+
+                {% for indicator in result.indicators %}
+
+                    <li class="list-group-item">
+
+                        {{ indicator }}
+
+                    </li>
+
+                {% endfor %}
+
+            </ul>
+
+        {% else %}
+
+            <p class="text-muted">
+                No specific indicators were supplied.
+            </p>
+
+        {% endif %}
+
+    </div>
+
+
+    <!-- Recommendations -->
+    <div class="card shadow-sm p-4 mb-4">
+
+        <h4 class="fw-bold mb-3">
+            🛡️ Recommended Actions
+        </h4>
+
+        {% if result.recommendations %}
+
+            <ol class="list-group list-group-numbered">
+
+                {% for recommendation in result.recommendations %}
+
+                    <li class="list-group-item">
+
+                        {{ recommendation }}
+
+                    </li>
+
+                {% endfor %}
+
+            </ol>
+
+        {% else %}
+
+            <p class="text-muted">
+                No additional recommendations.
+            </p>
+
+        {% endif %}
+
+    </div>
+
+
+    <!-- Local Analysis Notice -->
+    <div class="alert alert-success">
+
+        <strong>Privacy:</strong>
+
+        This analysis was performed locally by CyberShield AI.
+        Security findings are not sent to an external AI service.
+
+    </div>
+
+
+    <!-- Bottom Navigation -->
+    <div class="text-center mt-4">
+
+        <a href="/ai-threat-analysis"
+           class="btn btn-primary me-2">
+
+            Analyze Another Finding
+
+        </a>
+
+        <a href="/"
+           class="btn btn-outline-secondary">
+
+            Return to Dashboard
+
+        </a>
+
+    </div>
+
+</div>
+
+{% endblock %}

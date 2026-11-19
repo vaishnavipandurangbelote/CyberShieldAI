@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+CyberShield AI - URL Security Result
+{% endblock %}
+
+
+{% block content %}
+
+<div class="container py-5">
+
+
+    <div class="mb-4">
+
+        <a href="/url-scanner"
+           class="btn btn-outline-secondary">
+
+            ← Scan Another URL
+
+        </a>
+
+    </div>
+
+
+    <h1 class="fw-bold mb-4">
+        URL Security Result
+    </h1>
+
+
+    <div class="card shadow-sm p-4">
+
+
+        <h4 class="mb-4">
+            {{ result.url }}
+        </h4>
+
+
+        <hr>
+
+
+        <p>
+            <strong>Status:</strong>
+
+            {{ result.status }}
+        </p>
+
+
+        <p>
+            <strong>Risk:</strong>
+
+            {{ result.risk }}
+        </p>
+
+
+        <p>
+            <strong>Risk Score:</strong>
+
+            {{ result.score }}
+        </p>
+
+
+        <p>
+            <strong>Domain:</strong>
+
+            {{ result.domain }}
+        </p>
+
+
+        <hr>
+
+
+        <h4 class="mb-3">
+            Findings
+        </h4>
+
+
+        <ul>
+
+            {% for finding in result.findings %}
+
+            <li class="mb-2">
+                {{ finding }}
+            </li>
+
+            {% endfor %}
+
+        </ul>
+
+
+    </div>
+
+</div>
+
+    <!-- REPORT INCIDENT -->
+    <div class="card shadow-sm p-4 mt-4 text-center">
+        <h4 class="fw-bold mb-2">🚨 Report Security Incident</h4>
+
+        <p class="text-muted">
+            Create an incident report from this URL scan.
+        </p>
+
+        <form method="POST" action="{{ url_for('main.report_incident') }}">
+            <input type="hidden" name="affected_item"
+                   value="{{ result.url }}">
+
+            <button type="submit" class="btn btn-danger">
+                Report Incident
+            </button>
+        </form>
+    </div>
+
+
+{% endblock %}

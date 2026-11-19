@@ -1,0 +1,256 @@
+{% extends "base.html" %}
+
+{% block title %}
+CyberShield AI - Scan Result
+{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <div class="mb-4">
+        <a href="/file-scanner" class="btn btn-outline-secondary">
+            ← Scan Another File
+        </a>
+    </div>
+
+    <h1 class="fw-bold mb-4">
+        File Security Result
+    </h1>
+
+    <div class="card shadow-sm p-4">
+
+        <h4>{{ result.filename }}</h4>
+
+        <hr>
+
+        <p>
+            <strong>Status:</strong>
+            {{ result.status }}
+        </p>
+
+        <p>
+            <strong>Risk:</strong>
+            {{ result.risk }}
+        </p>
+
+        <p>
+            <strong>File Type:</strong>
+            {{ result.extension or "Unknown" }}
+        </p>
+
+        <p>
+            <strong>File Size:</strong>
+            {{ result.size }} bytes
+        </p>
+
+        <p>
+            <strong>SHA-256:</strong>
+        </p>
+
+        <code class="d-block text-break mb-4">
+            {{ result.sha256 }}
+        </code>
+
+        <h5>Findings</h5>
+
+        <ul>
+            {% for finding in result.findings %}
+            <li>{{ finding }}</li>
+            {% endfor %}
+        </ul>
+
+    </div>
+
+    
+    <!-- SCAN PERFORMANCE -->
+
+    <div class="card shadow-sm p-4 mt-4">
+
+        <h4 class="fw-bold mb-3">
+            ⏱️ Scan Performance
+        </h4>
+
+        <div class="row g-3">
+
+            <div class="col-md-3 col-6">
+                <div class="border rounded p-3 text-center">
+                    <h6 class="text-muted">Total Scan</h6>
+                    <h5>{{ result.scan_time | default(0) }} s</h5>
+                </div>
+            </div>
+
+            <div class="col-md-3 col-6">
+                <div class="border rounded p-3 text-center">
+                    <h6 class="text-muted">File Hashing</h6>
+                    <h5>{{ result.hash_time | default(0) }} s</h5>
+                </div>
+            </div>
+
+            <div class="col-md-3 col-6">
+                <div class="border rounded p-3 text-center">
+                    <h6 class="text-muted">Hash Reputation</h6>
+                    <h5>{{ result.reputation_time | default(0) }} s</h5>
+                </div>
+            </div>
+
+            <div class="col-md-3 col-6">
+                <div class="border rounded p-3 text-center">
+                    <h6 class="text-muted">ClamAV Scan</h6>
+                    <h5>{{ result.clamav_time | default(0) }} s</h5>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ==================================================
+         AI THREAT ANALYSIS
+    ================================================== -->
+
+    <div class="card shadow-sm p-4 mt-4">
+
+        <h4 class="fw-bold mb-4">
+            🤖 AI Threat Analysis
+        </h4>
+
+        <div class="row g-3 mb-4">
+
+            <div class="col-md-4">
+                <div class="border rounded p-3 text-center">
+                    <h6 class="text-muted">
+                        Threat Score
+                    </h6>
+
+                    <h2 class="fw-bold">
+                        {{ ai_result.threat_score }}/100
+                    </h2>
+                </div>
+            </div>
+
+
+            <div class="col-md-4">
+                <div class="border rounded p-3 text-center">
+                    <h6 class="text-muted">
+                        Threat Level
+                    </h6>
+
+                    <h2 class="fw-bold">
+                        {{ ai_result.threat_level }}
+                    </h2>
+                </div>
+            </div>
+
+
+            <div class="col-md-4">
+                <div class="border rounded p-3 text-center">
+                    <h6 class="text-muted">
+                        Priority
+                    </h6>
+
+                    <h2 class="fw-bold">
+                        {{ ai_result.priority }}
+                    </h2>
+                </div>
+            </div>
+
+        </div>
+
+
+        <!-- AI Summary -->
+
+        <div class="alert alert-danger">
+
+            <h5 class="fw-bold">
+                Security Assessment
+            </h5>
+
+            <p class="mb-0">
+                {{ ai_result.summary }}
+            </p>
+
+        </div>
+
+
+        <!-- Threats -->
+
+        <h5 class="fw-bold mt-4">
+            🚨 Threats Identified
+        </h5>
+
+        <ul>
+
+            {% for threat in ai_result.threats %}
+
+            <li class="mb-2">
+                {{ threat }}
+            </li>
+
+            {% endfor %}
+
+        </ul>
+
+
+        <!-- Indicators -->
+
+        <h5 class="fw-bold mt-4">
+            🔎 Security Indicators
+        </h5>
+
+        <ul>
+
+            {% for indicator in ai_result.indicators %}
+
+            <li class="mb-2">
+                {{ indicator }}
+            </li>
+
+            {% endfor %}
+
+        </ul>
+
+
+        <!-- Recommendations -->
+
+        <h5 class="fw-bold mt-4">
+            🛡️ Recommended Actions
+        </h5>
+
+        <ul>
+
+            {% for recommendation in ai_result.recommendations %}
+
+            <li class="mb-2">
+                {{ recommendation }}
+            </li>
+
+            {% endfor %}
+
+        </ul>
+
+    </div>
+</div>
+
+    
+
+    <!-- REPORT INCIDENT -->
+    <div class="card shadow-sm p-4 mt-4 text-center">
+        <h4 class="fw-bold mb-2">🚨 Report Security Incident</h4>
+        <p class="text-muted">
+            Create an incident report automatically from this file scan.
+        </p>
+
+        <form method="POST" action="{{ url_for('main.report_incident') }}">
+            <input type="hidden" name="affected_item"
+                   value="{{ result.filename }}">
+
+            <button type="submit" class="btn btn-danger">
+                Report Incident
+            </button>
+        </form>
+    </div>
+
+</div>
+
+{% endblock %}
+

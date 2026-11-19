@@ -1,0 +1,245 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CyberShield AI | Security Services</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #0b1120;
+            color: white;
+            min-height: 100vh;
+            padding: 35px 20px;
+        }
+
+        .container {
+            max-width: 750px;
+            margin: auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .logo {
+            font-size: 50px;
+            margin-bottom: 10px;
+        }
+
+        .header h1 {
+            color: #38bdf8;
+            font-size: 34px;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #b8c5d6;
+            line-height: 1.6;
+        }
+
+        .section-title {
+            font-size: 21px;
+            margin-bottom: 18px;
+        }
+
+        .service {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            width: 100%;
+            padding: 20px;
+            margin-bottom: 14px;
+
+            background: #172338;
+            border: 1px solid #334155;
+            border-radius: 12px;
+
+            color: white;
+            text-decoration: none;
+
+            transition: 0.2s ease;
+        }
+
+        .service:hover {
+            background: #203750;
+            border-color: #38bdf8;
+            transform: translateY(-2px);
+        }
+
+        .service-icon {
+            font-size: 30px;
+            width: 42px;
+            text-align: center;
+        }
+
+        .service-info {
+            flex: 1;
+        }
+
+        .service-info h3 {
+            font-size: 17px;
+            margin-bottom: 6px;
+        }
+
+        .service-info p {
+            color: #b8c5d6;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .arrow {
+            color: #38bdf8;
+            font-size: 26px;
+        }
+
+        footer {
+            text-align: center;
+            color: #94a3b8;
+            font-size: 12px;
+            margin-top: 30px;
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 25px 15px;
+            }
+
+            .header h1 {
+                font-size: 28px;
+            }
+
+            .service {
+                padding: 16px 12px;
+                gap: 10px;
+            }
+
+            .service-info h3 {
+                font-size: 14px;
+            }
+
+            .service-icon {
+                font-size: 25px;
+                width: 32px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <header class="header">
+            <div class="logo">🛡️</div>
+
+            <h1>CyberShield AI</h1>
+
+            <p>Unified Cybersecurity Protection Platform</p>
+            <p>Choose a security service to get started.</p>
+        </header>
+
+        <h2 class="section-title">Security Services</h2>
+
+        <!-- 1. Malware & Antivirus Scanner -->
+        <a href="{{ url_for('main.file_scanner') }}"
+           class="service">
+
+            <span class="service-icon">🛡️</span>
+
+            <div class="service-info">
+                <h3>Malware & Antivirus Scanner</h3>
+                <p>Scan files and folders for potential threats.</p>
+            </div>
+
+            <span class="arrow">›</span>
+        </a>
+
+        <!-- 2. URL & Phishing Scanner -->
+        <a href="{{ url_for('main.url_scanner') }}"
+           class="service">
+
+            <span class="service-icon">🌐</span>
+
+            <div class="service-info">
+                <h3>URL & Phishing Scanner</h3>
+                <p>Check suspicious links and potentially malicious URLs.</p>
+            </div>
+
+            <span class="arrow">›</span>
+        </a>
+
+        <!-- 3. Email Phishing Analyzer -->
+        <a href="{{ url_for('main.email_security') }}"
+           class="service">
+
+            <span class="service-icon">📧</span>
+
+            <div class="service-info">
+                <h3>Email Phishing Analyzer</h3>
+                <p>Analyze email content for suspicious indicators.</p>
+            </div>
+
+            <span class="arrow">›</span>
+        </a>
+
+        <!-- 4. Password Security Checker -->
+        <a href="{{ url_for('main.password_security') }}"
+           class="service">
+
+            <span class="service-icon">🔐</span>
+
+            <div class="service-info">
+                <h3>Password Security Checker</h3>
+                <p>Evaluate password strength and common weaknesses.</p>
+            </div>
+
+            <span class="arrow">›</span>
+        </a>
+
+        <!-- 5. Network Security Monitor -->
+        <a href="{{ url_for('main.network_security') }}"
+           class="service">
+
+            <span class="service-icon">📡</span>
+
+            <div class="service-info">
+                <h3>Network Security Monitor</h3>
+                <p>Check local ports and listening services.</p>
+            </div>
+
+            <span class="arrow">›</span>
+        </a>
+
+        <a href="{{ url_for('main.dashboard') }}"
+           class="service"
+           style="justify-content: center;
+                  border-color: #38bdf8;
+                  color: #38bdf8;
+                  font-weight: bold;">
+
+            📊 &nbsp; Open Main Dashboard &nbsp; →
+
+        </a>
+
+        <footer>
+            CyberShield AI &copy; 2026
+            <br>
+            Unified Cybersecurity Protection
+        </footer>
+
+        
+    </div>
+
+</body>
+</html>

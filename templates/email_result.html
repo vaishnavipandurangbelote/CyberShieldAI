@@ -1,0 +1,248 @@
+
+{% extends "base.html" %}
+
+{% block title %}
+CyberShield AI - Email Security Result
+{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <div class="mb-4">
+
+        <a href="/email-security"
+           class="btn btn-outline-secondary">
+
+            ← Analyze Another Email
+
+        </a>
+
+    </div>
+
+
+    <div class="text-center mb-5">
+
+        <h1 class="fw-bold">
+            Email Security Result
+        </h1>
+
+        <p class="text-muted">
+            CyberShield AI security analysis
+        </p>
+
+    </div>
+
+
+    <!-- RESULT SUMMARY -->
+
+    <div class="card shadow-sm p-4 mb-4">
+
+        <div class="row text-center">
+
+            <div class="col-md-4 mb-3">
+
+                <h6 class="text-muted">
+                    Status
+                </h6>
+
+                <h3>
+
+                    {% if result.risk == "High" %}
+
+                    <span class="badge bg-danger">
+                        {{ result.status }}
+                    </span>
+
+                    {% elif result.risk == "Medium" %}
+
+                    <span class="badge bg-warning text-dark">
+                        {{ result.status }}
+                    </span>
+
+                    {% else %}
+
+                    <span class="badge bg-success">
+                        {{ result.status }}
+                    </span>
+
+                    {% endif %}
+
+                </h3>
+
+            </div>
+
+
+            <div class="col-md-4 mb-3">
+
+                <h6 class="text-muted">
+                    Risk
+                </h6>
+
+                <h3>
+                    {{ result.risk }}
+                </h3>
+
+            </div>
+
+
+            <div class="col-md-4 mb-3">
+
+                <h6 class="text-muted">
+                    Risk Score
+                </h6>
+
+                <h3>
+                    {{ result.score }}/100
+                </h3>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- EMAIL INFORMATION -->
+
+    <div class="card shadow-sm p-4 mb-4">
+
+        <h4 class="mb-3">
+            📧 Email Information
+        </h4>
+
+        <p>
+            <strong>Sender:</strong>
+
+            {% if result.sender %}
+                {{ result.sender }}
+            {% else %}
+                Not provided
+            {% endif %}
+        </p>
+
+        <p>
+            <strong>Email Length:</strong>
+            {{ result.email_length }} characters
+        </p>
+
+        <p>
+            <strong>URLs Detected:</strong>
+            {{ result.url_count }}
+        </p>
+
+    </div>
+
+
+    <!-- FINDINGS -->
+
+    <div class="card shadow-sm p-4 mb-4">
+
+        <h4 class="mb-3">
+            🔎 Security Findings
+        </h4>
+
+        <ul class="list-group">
+
+            {% for finding in result.findings %}
+
+            <li class="list-group-item">
+                ⚠️ {{ finding }}
+            </li>
+
+            {% endfor %}
+
+        </ul>
+
+    </div>
+
+
+    <!-- URLs -->
+
+    {% if result.urls %}
+
+    <div class="card shadow-sm p-4 mb-4">
+
+        <h4 class="mb-3">
+            🌐 URLs Found
+        </h4>
+
+        <ul>
+
+            {% for url in result.urls %}
+
+            <li class="mb-2">
+                <code>{{ url }}</code>
+            </li>
+
+            {% endfor %}
+
+        </ul>
+
+        <div class="alert alert-warning mb-0">
+
+            CyberShield AI detected links in this email.
+            Do not open suspicious links before verifying the sender.
+
+        </div>
+
+    </div>
+
+    {% endif %}
+
+
+    <!-- RECOMMENDATIONS -->
+
+    <div class="card shadow-sm p-4 mb-4">
+
+        <h4 class="mb-3">
+            🛡️ Security Recommendations
+        </h4>
+
+        <ul>
+
+            {% for recommendation in result.recommendations %}
+
+            <li class="mb-2">
+                {{ recommendation }}
+            </li>
+
+            {% endfor %}
+
+        </ul>
+
+    </div>
+
+
+    <div class="alert alert-info">
+
+        <strong>Important:</strong>
+
+        A "Likely Safe" result does not guarantee that an email
+        is completely safe. This scanner performs local
+        rule-based security analysis.
+
+    </div>
+
+</div>
+
+    <!-- REPORT INCIDENT -->
+    <div class="card shadow-sm p-4 mt-4 text-center">
+        <h4 class="fw-bold mb-2">🚨 Report Security Incident</h4>
+
+        <p class="text-muted">
+            Create an incident report from this email analysis.
+        </p>
+
+        <form method="POST" action="{{ url_for('main.report_incident') }}">
+            <input type="hidden" name="affected_item"
+                   value="{{ result.sender or 'Email Security Analysis' }}">
+
+            <button type="submit" class="btn btn-danger">
+                Report Incident
+            </button>
+        </form>
+    </div>
+
+
+{% endblock %}

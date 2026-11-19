@@ -1,0 +1,257 @@
+{% extends "base.html" %}
+
+{% block title %}
+CyberShield AI - File Security Scanner
+{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <!-- Back Button -->
+    <div class="mb-4">
+        <a href="/" class="btn btn-outline-secondary">
+            ← Back to Dashboard
+        </a>
+    </div>
+
+
+    <!-- Page Header -->
+    <div class="text-center mb-5">
+
+        <h1 class="fw-bold">
+            File Security Scanner
+        </h1>
+
+        <p class="text-muted">
+            Scan individual files or entire folders for malware
+            and suspicious activity using CyberShield AI.
+        </p>
+
+    </div>
+
+
+    <div class="row g-4 justify-content-center">
+
+
+        <!-- ==========================================
+             SINGLE FILE SCANNER
+             ========================================== -->
+
+        <div class="col-lg-6">
+
+            <div class="card shadow-sm p-4 h-100">
+
+                <div class="text-center mb-4">
+
+                    <div style="font-size: 45px;">
+                        📄
+                    </div>
+
+                    <h4 class="fw-bold mt-2">
+                        Scan a File
+                    </h4>
+
+                    <p class="text-muted mb-0">
+                        Analyze an individual file for malware
+                        and security risks.
+                    </p>
+
+                </div>
+
+
+                <form
+                    method="POST"
+                    action="/scan-file"
+                    enctype="multipart/form-data"
+                >
+
+                    <div class="mb-3">
+
+                        <label class="form-label fw-semibold">
+                            Select File
+                        </label>
+
+                        <input
+                            type="file"
+                            name="file"
+                            class="form-control"
+                            required
+                        >
+
+                    </div>
+
+
+                    <button
+                        type="submit"
+                        class="btn btn-primary w-100"
+                    >
+                        🔍 Analyze File
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- ==========================================
+             FOLDER SCANNER
+             ========================================== -->
+
+        <div class="col-lg-6">
+
+            <div class="card shadow-sm p-4 h-100">
+
+                <div class="text-center mb-4">
+
+                    <div style="font-size: 45px;">
+                        📁
+                    </div>
+
+                    <h4 class="fw-bold mt-2">
+                        Scan a Folder
+                    </h4>
+
+                    <p class="text-muted mb-0">
+                        Scan multiple files and subfolders
+                        using the ClamAV security engine.
+                    </p>
+
+                </div>
+
+
+                <form
+                    method="POST"
+                    action="/scan-folder"
+                >
+
+                    <div class="mb-3">
+
+                        <label class="form-label fw-semibold">
+                            Folder Path
+                        </label>
+
+                        <input
+                            type="text"
+                            name="folder_path"
+                            class="form-control"
+                            placeholder="Example: C:\Users\YourName\Documents"
+                            required
+                        >
+
+                        <small class="text-muted">
+                            Enter the full path of the folder you
+                            want CyberShield AI to scan.
+                        </small>
+
+                    </div>
+
+
+                    <button
+                        type="submit"
+                        class="btn btn-danger w-100"
+                    >
+                        🛡️ Scan Folder
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ==========================================
+         SECURITY INFORMATION
+         ========================================== -->
+
+    <div class="card shadow-sm p-4 mt-4">
+
+        <div class="row text-center">
+
+            <div class="col-md-4 mb-3 mb-md-0">
+
+                <div style="font-size: 30px;">
+                    🔐
+                </div>
+
+                <h6 class="fw-bold mt-2">
+                    SHA-256 Analysis
+                </h6>
+
+                <p class="text-muted small mb-0">
+                    Files are checked using cryptographic
+                    SHA-256 fingerprints.
+                </p>
+
+            </div>
+
+
+            <div class="col-md-4 mb-3 mb-md-0">
+
+                <div style="font-size: 30px;">
+                    🦠
+                </div>
+
+                <h6 class="fw-bold mt-2">
+                    ClamAV Malware Detection
+                </h6>
+
+                <p class="text-muted small mb-0">
+                    Files and folders are scanned using
+                    the local ClamAV antivirus engine.
+                </p>
+
+            </div>
+
+
+            <div class="col-md-4">
+
+                <div style="font-size: 30px;">
+                    🛡️
+                </div>
+
+                <h6 class="fw-bold mt-2">
+                    Safe Analysis
+                </h6>
+
+                <p class="text-muted small mb-0">
+                    Uploaded files are analyzed without
+                    being executed by the application.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ==========================================
+         SAFETY NOTICE
+         ========================================== -->
+
+    <div class="alert alert-info mt-4">
+
+        <strong>Safety:</strong>
+
+        CyberShield AI analyzes files using security
+        scanning techniques without intentionally executing
+        uploaded files.
+
+        Do not scan folders containing files you do not have
+        permission to access.
+
+    </div>
+
+
+</div>
+
+{% endblock %}

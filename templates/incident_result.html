@@ -1,0 +1,130 @@
+{% extends "base.html" %}
+
+{% block title %}
+CyberShield AI - Incident Report
+{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <div class="mb-4">
+        <a href="/incident-reporting"
+           class="btn btn-outline-secondary">
+            ← Report Another Incident
+        </a>
+    </div>
+
+
+    <div class="text-center mb-5">
+
+        <h1 class="fw-bold">
+            Incident Report Generated
+        </h1>
+
+        <p class="text-muted">
+            The security incident has been successfully recorded.
+        </p>
+
+    </div>
+
+
+    <div class="card shadow-sm p-4 mx-auto"
+         style="max-width: 800px;">
+
+        <div class="alert alert-success">
+
+            <h5 class="fw-bold">
+                ✅ Incident Report Saved
+            </h5>
+
+            <p class="mb-0">
+                CyberShield AI has successfully stored the incident report locally.
+            </p>
+
+        </div>
+
+
+        <h4 class="fw-bold mb-4">
+            Security Incident Details
+        </h4>
+
+
+        <div class="row mb-3">
+
+            <div class="col-md-6">
+                <strong>Incident ID</strong>
+                <p>{{ report.incident_id }}</p>
+            </div>
+
+            <div class="col-md-6">
+                <strong>Status</strong>
+                <p>{{ report.status }}</p>
+            </div>
+
+        </div>
+
+
+        <div class="row mb-3">
+
+            <div class="col-md-6">
+                <strong>Incident Type</strong>
+                <p>{{ report.incident_type }}</p>
+            </div>
+
+            <div class="col-md-6">
+                <strong>Severity</strong>
+                <p>{{ report.severity }}</p>
+            </div>
+
+        </div>
+
+
+        <div class="mb-3">
+
+            <strong>Affected File / URL / Device</strong>
+
+            <p>
+                {{ report.affected_item or "Not specified" }}
+            </p>
+
+        </div>
+
+
+        <div class="mb-3">
+
+            <strong>Incident Description</strong>
+
+            <div class="border rounded p-3 mt-2">
+                {{ report.description }}
+            </div>
+
+        </div>
+
+
+        <div class="mb-4">
+
+            <strong>Reported At</strong>
+
+            <p>
+                {{ report.timestamp }}
+            </p>
+
+        </div>
+
+
+        <div class="alert alert-info mb-0">
+
+            <strong>Next Step:</strong>
+
+            The incident is currently marked as
+            <strong>{{ report.status }}</strong>.
+            It can be reviewed later through the Security Reports module.
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

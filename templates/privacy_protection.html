@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+
+{% block title %}
+CyberShield AI - Privacy Protection
+{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <!-- Back Button -->
+    <div class="mb-4">
+        <a href="/" class="btn btn-outline-secondary">
+            ← Back to Dashboard
+        </a>
+    </div>
+
+
+    <!-- Header -->
+    <div class="text-center mb-5">
+
+        <h1 class="fw-bold">
+            🔒 Privacy Protection
+        </h1>
+
+        <p class="text-muted">
+            Check content for possible privacy and sensitive-information exposure.
+        </p>
+
+    </div>
+
+
+    <div class="row justify-content-center">
+
+        <div class="col-lg-9">
+
+            <div class="card shadow-sm border-0">
+
+                <div class="card-body p-4">
+
+                    <h4 class="fw-bold mb-2">
+                        Privacy Risk Scanner
+                    </h4>
+
+                    <p class="text-muted">
+                        Paste text or content below to identify possible
+                        personal or sensitive information.
+                    </p>
+
+
+                    <form action="/scan-privacy" method="POST">
+
+                        <div class="mb-4">
+
+                            <label
+                                for="text"
+                                class="form-label fw-semibold"
+                            >
+                                Enter Content
+                            </label>
+
+                            <textarea
+                                id="text"
+                                name="text"
+                                class="form-control"
+                                rows="9"
+                                placeholder="Paste text here..."
+                                required
+                            ></textarea>
+
+                        </div>
+
+
+                        <button
+                            type="submit"
+                            class="btn btn-primary w-100"
+                        >
+                            🔍 Analyze Privacy Risk
+                        </button>
+
+                    </form>
+
+
+                    <div class="alert alert-info mt-4 mb-0">
+
+                        <strong>🔒 Privacy Notice</strong>
+
+                        <p class="mb-0 mt-1">
+                            The content is analyzed locally by CyberShield AI
+                            and is not intentionally stored by this scanner.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

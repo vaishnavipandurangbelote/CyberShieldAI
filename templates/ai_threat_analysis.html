@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AI Threat Analysis - CyberShield AI</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f5f7fb;
+            color: #1f2937;
+        }
+
+        .topbar {
+            background: #0b1f3a;
+            color: white;
+            padding: 18px 35px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .brand {
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .brand span {
+            margin-right: 8px;
+        }
+
+        .tagline {
+            font-size: 14px;
+            opacity: 0.85;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1100px;
+            margin: 35px auto;
+        }
+
+        .back-button {
+            display: inline-block;
+            text-decoration: none;
+            color: #374151;
+            border: 1px solid #cbd5e1;
+            padding: 10px 18px;
+            border-radius: 7px;
+            background: white;
+            margin-bottom: 30px;
+        }
+
+        .back-button:hover {
+            background: #eef2f7;
+        }
+
+        .heading {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .heading h1 {
+            color: #17345f;
+            font-size: 38px;
+            margin-bottom: 10px;
+        }
+
+        .heading p {
+            color: #64748b;
+            font-size: 16px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.07);
+            margin-bottom: 25px;
+        }
+
+        .card h2 {
+            margin-top: 0;
+            color: #243b64;
+        }
+
+        .card-description {
+            color: #64748b;
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        select,
+        input,
+        textarea {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #cbd5e1;
+            border-radius: 7px;
+            font-size: 15px;
+            margin-bottom: 20px;
+            font-family: inherit;
+        }
+
+        textarea {
+            min-height: 180px;
+            resize: vertical;
+        }
+
+        select:focus,
+        input:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #2563eb;
+        }
+
+        .button {
+            width: 100%;
+            border: none;
+            background: #2563eb;
+            color: white;
+            padding: 14px;
+            border-radius: 7px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .button:hover {
+            background: #1d4ed8;
+        }
+
+        .info-box {
+            background: #e0f2fe;
+            border-left: 5px solid #0284c7;
+            padding: 15px;
+            border-radius: 6px;
+            color: #164e63;
+            margin-top: 20px;
+            line-height: 1.6;
+        }
+
+        .example-box {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 18px;
+            margin-top: 20px;
+        }
+
+        .example-box h3 {
+            margin-top: 0;
+            color: #334155;
+        }
+
+        .example-box pre {
+            background: #0f172a;
+            color: #e2e8f0;
+            padding: 15px;
+            border-radius: 6px;
+            overflow-x: auto;
+            white-space: pre-wrap;
+        }
+
+        @media (max-width: 700px) {
+
+            .topbar {
+                padding: 15px 20px;
+            }
+
+            .tagline {
+                display: none;
+            }
+
+            .container {
+                width: 94%;
+            }
+
+            .heading h1 {
+                font-size: 30px;
+            }
+
+            .card {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="topbar">
+
+        <div class="brand">
+            <span>🛡️</span>
+            CyberShield AI
+        </div>
+
+        <div class="tagline">
+            Unified Cybersecurity Protection
+        </div>
+
+    </div>
+
+
+    <div class="container">
+
+        <a href="/" class="back-button">
+            ← Back to Dashboard
+        </a>
+
+
+        <div class="heading">
+
+            <h1>AI Threat Analysis</h1>
+
+            <p>
+                Analyze security findings and identify potential cybersecurity risks.
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <h2>🔍 Security Threat Analyzer</h2>
+
+            <p class="card-description">
+                Enter security findings collected from CyberShield AI scanners.
+                The local analysis engine will evaluate the findings and generate
+                a threat assessment and security recommendations.
+            </p>
+
+
+            <form action="/analyze-threat" method="POST">
+
+                <label for="risk">
+                    Current Risk Level
+                </label>
+
+                <select id="risk" name="risk">
+
+                    <option value="">
+                        Select risk level
+                    </option>
+
+                    <option value="low">
+                        Low
+                    </option>
+
+                    <option value="medium">
+                        Medium
+                    </option>
+
+                    <option value="high">
+                        High
+                    </option>
+
+                </select>
+
+
+                <label for="score">
+                    Existing Security Score
+                </label>
+
+                <input
+                    type="number"
+                    id="score"
+                    name="score"
+                    min="0"
+                    max="100"
+                    placeholder="Example: 70"
+                >
+
+
+                <label for="findings">
+                    Security Findings
+                </label>
+
+                <textarea
+                    id="findings"
+                    name="findings"
+                    placeholder="Enter each security finding on a new line..."
+                ></textarea>
+
+
+                <button
+                    type="submit"
+                    class="button"
+                >
+                    Analyze Security Threat
+                </button>
+
+            </form>
+
+
+            <div class="example-box">
+
+                <h3>Example Input</h3>
+
+                <pre>Suspicious URL detected
+Urgent account verification language detected
+HTTP connection detected
+Potential phishing indicators detected</pre>
+
+            </div>
+
+
+            <div class="info-box">
+
+                <strong>Privacy & Security:</strong><br>
+
+                This initial threat-analysis engine runs locally within
+                CyberShield AI. The submitted security findings are not
+                sent to an external AI service.
+
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+</html>

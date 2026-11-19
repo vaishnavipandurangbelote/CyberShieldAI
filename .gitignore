@@ -1,0 +1,34 @@
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# ClamAV data
+clamav-data/
+freshclam.conf
+
+# Logs and temporary files
+logs/
+*.log
+temp/
+tmp/
+
+# Secrets
+.env
+.env.*
+
+# Quarantine and uploaded files
+quarantine/
+uploads/
+
+# IDE settings
+.vscode/
+.idea/
+
+# Generated local files
+database/*.db
+reports/*.json

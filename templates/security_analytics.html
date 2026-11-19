@@ -1,0 +1,152 @@
+
+{% extends "base.html" %}
+
+{% block title %}CyberShield AI - Security Analytics{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="mb-4">
+        <a href="/dashboard" class="btn btn-outline-secondary">
+            &larr; Back to Dashboard
+        </a>
+    </div>
+
+    <div class="mb-4">
+        <h1 class="fw-bold">Security Analytics</h1>
+        <p class="text-muted">
+            View how security risk changes over time across all six scanners.
+        </p>
+    </div>
+
+    <div class="card shadow-sm p-4">
+        <h4 class="fw-bold mb-3">Unified Risk Timeline</h4>
+        <p class="text-muted small">
+            Higher values indicate greater risk. Unknown results are not plotted.
+            Scores are visualization values, not probabilities of infection.
+        </p>
+
+        <div style="position: relative; height: 450px;">
+            <canvas id="riskTimelineChart"></canvas>
+        </div>
+
+        {% if not chart_data %}
+        <p class="text-center text-muted mt-3">
+            No scan history is available for this browser session yet.
+        </p>
+        {% endif %}
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    const scanRecords = {{ chart_data | tojson }};
+
+    const scannerTypes = [
+        { key: "File Scan", label: "Malware — File Scanner" },
+        { key: "Folder Scan", label: "Malware — Folder Scanner" },
+        { key: "URL Scan", label: "URL & Phishing Scanner" },
+        { key: "Email Scan", label: "Email Phishing Analyzer" },
+        { key: "Password Scan", label: "Password Security Checker" },
+        { key: "Network Scan", label: "Network Security Monitor" }
+    ];
+
+    // Convert recognized risk levels to a consistent visualization scale.
+    // These are illustrative risk indices, not calibrated probabilities.
+    function getRiskScore(record) {
+        const risk = String(record.risk_level || "").trim().toLowerCase();
+        const status = String(record.scan_status || "").trim().toLowerCase();
+
+        if (["unknown", "", "error", "failed", "scan failed"].includes(risk)) {
+            return null;
+        }
+
+        if (["critical", "critical risk"].includes(risk)) return 100;
+        if (["high", "high risk"].includes(risk)) return 75;
+        if (["medium", "moderate", "medium risk"].includes(risk)) return 50;
+        if (["low", "low risk"].includes(risk)) return 25;
+
+        if (["clean", "safe", "no threat detected", "no threats detected"].includes(status)) {
+            return 0;
+        }
+
+        // Do not guess if the stored result cannot be interpreted.
+        return null;
+    }
+
+    const chartLabels = [...new Set(
+        scanRecords.map(record => record.scan_date)
+    )].sort((a, b) => new Date(a) - new Date(b));
+
+    const datasets = scannerTypes.map(scanner => ({
+        label: scanner.label,
+        data: chartLabels.map(time => {
+            const matchingRecords = scanRecords.filter(
+                record =>
+                    record.scan_type === scanner.key &&
+                    record.scan_date === time
+            );
+
+            if (!matchingRecords.length) return null;
+
+            return getRiskScore(matchingRecords[matchingRecords.length - 1]);
+        }),
+        spanGaps: false,
+        tension: 0.2,
+        pointRadius: 4,
+        pointHoverRadius: 7,
+        borderWidth: 2
+    }));
+
+    new Chart(document.getElementById("riskTimelineChart"), {
+        type: "line",
+        data: {
+            labels: chartLabels.map(time =>
+                new Date(time).toLocaleString()
+            ),
+            datasets: datasets
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            interaction: {
+                mode: "nearest",
+                intersect: false
+            },
+            scales: {
+                y: {
+                    min: 0,
+                    max: 100,
+                    title: {
+                        display: true,
+                        text: "Risk index (0 = lowest, 100 = highest)"
+                    },
+                    ticks: {
+                        stepSize: 25
+                    }
+                },
+                x: {
+                    title: {
+                        display: true,
+                        text: "Scan date and time"
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    position: "bottom"
+                },
+                tooltip: {
+                    callbacks: {
+                        label: context =>
+                            context.dataset.label + ": " +
+                            (context.parsed.y === null
+                                ? "Unknown risk"
+                                : context.parsed.y + "/100")
+                    }
+                }
+            }
+        }
+    });
+</script>
+{% endblock %}

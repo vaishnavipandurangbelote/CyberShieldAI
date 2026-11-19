@@ -1,0 +1,331 @@
+{% extends "base.html" %}
+
+{% block title %}
+CyberShield AI - Network Security Result
+{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <div class="mb-4">
+
+        <a
+            href="/network-security"
+            class="btn btn-outline-secondary">
+
+            ← Scan Again
+
+        </a>
+
+    </div>
+
+
+    <div class="text-center mb-5">
+
+        <h1 class="fw-bold">
+            Network Security Result
+        </h1>
+
+        <p class="text-muted">
+            CyberShield AI local network analysis
+        </p>
+
+    </div>
+
+
+    <!-- Result Summary -->
+
+    <div class="card shadow-sm mb-4">
+
+        <div class="card-body">
+
+            <div class="row text-center">
+
+                <div class="col-md-3">
+
+                    <small class="text-muted">
+                        Status
+                    </small>
+
+                    <h4 class="mt-2">
+
+                        {{ result.status }}
+
+                    </h4>
+
+                </div>
+
+
+                <div class="col-md-3">
+
+                    <small class="text-muted">
+                        Risk
+                    </small>
+
+                    <h4 class="mt-2">
+
+                        {{ result.risk }}
+
+                    </h4>
+
+                </div>
+
+
+                <div class="col-md-3">
+
+                    <small class="text-muted">
+                        Security Score
+                    </small>
+
+                    <h4 class="mt-2">
+
+                        {{ result.score }}/100
+
+                    </h4>
+
+                </div>
+
+
+                <div class="col-md-3">
+
+                    <small class="text-muted">
+                        Open Services
+                    </small>
+
+                    <h4 class="mt-2">
+
+                        {{ result.open_count }}
+
+                    </h4>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Local System Information -->
+
+    <div class="card shadow-sm mb-4">
+
+        <div class="card-body">
+
+            <h4 class="fw-bold mb-4">
+                💻 Local System Information
+            </h4>
+
+            <div class="row">
+
+                <div class="col-md-4">
+
+                    <strong>Hostname</strong>
+
+                    <p class="text-muted">
+                        {{ result.hostname }}
+                    </p>
+
+                </div>
+
+
+                <div class="col-md-4">
+
+                    <strong>Local IP</strong>
+
+                    <p class="text-muted">
+                        {{ result.local_ip }}
+                    </p>
+
+                </div>
+
+
+                <div class="col-md-4">
+
+                    <strong>Scan Target</strong>
+
+                    <p class="text-muted">
+                        {{ result.target }}
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Port Scan Results -->
+
+    <div class="card shadow-sm mb-4">
+
+        <div class="card-body">
+
+            <h4 class="fw-bold mb-4">
+                🔎 Service & Port Status
+            </h4>
+
+
+            <div class="table-responsive">
+
+                <table class="table table-bordered align-middle">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Port
+                            </th>
+
+                            <th>
+                                Service
+                            </th>
+
+                            <th>
+                                Status
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                        {% for item in result.scan_results %}
+
+                        <tr>
+
+                            <td>
+                                {{ item.port }}
+                            </td>
+
+                            <td>
+                                {{ item.service }}
+                            </td>
+
+                            <td>
+
+                                {% if item.status == "Open" %}
+
+                                <span class="badge bg-warning text-dark">
+                                    Open
+                                </span>
+
+                                {% else %}
+
+                                <span class="badge bg-success">
+                                    Closed
+                                </span>
+
+                                {% endif %}
+
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Security Findings -->
+
+    <div class="card shadow-sm mb-4">
+
+        <div class="card-body">
+
+            <h4 class="fw-bold mb-4">
+                🔍 Security Findings
+            </h4>
+
+
+            {% for finding in result.findings %}
+
+            <div class="alert alert-warning">
+
+                ⚠️ {{ finding }}
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+
+    <!-- Recommendations -->
+
+    <div class="card shadow-sm">
+
+        <div class="card-body">
+
+            <h4 class="fw-bold mb-4">
+                💡 Security Recommendations
+            </h4>
+
+
+            {% for recommendation in result.recommendations %}
+
+            <div class="alert alert-info">
+
+                💡 {{ recommendation }}
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+
+</div>
+
+    <!-- REPORT INCIDENT -->
+
+    <div class="card shadow-sm mt-4 mb-4">
+
+        <div class="card-body text-center">
+
+            <h4 class="fw-bold mb-3">
+                🚨 Report Security Incident
+            </h4>
+
+            <p class="text-muted">
+                Create an incident report from this network security analysis.
+            </p>
+
+            <form method="POST" action="{{ url_for('main.report_incident') }}">
+
+                <input
+                    type="hidden"
+                    name="affected_item"
+                    value="{{ result.target }}">
+
+                <button type="submit" class="btn btn-danger">
+                    Report Incident
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+{% endblock %}

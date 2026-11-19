@@ -1,0 +1,121 @@
+
+{% extends "base.html" %}
+
+{% block title %}CyberShield AI - Incident Reporting{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+
+    <div class="mb-4">
+        <a href="{{ url_for('main.dashboard') }}"
+           class="btn btn-outline-secondary">
+            ← Back to Dashboard
+        </a>
+    </div>
+
+    <div class="text-center mb-5">
+        <h1 class="fw-bold">Incident Reporting</h1>
+        <p class="text-muted">
+            Automatically generated reports from your security scans.
+        </p>
+    </div>
+
+    <div class="row g-3 mb-4">
+        <div class="col-md-4">
+            <div class="card shadow-sm p-3">
+                <h6>Total Incidents</h6>
+                <h3>{{ incidents|length }}</h3>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow-sm p-3">
+                <h6>Open Incidents</h6>
+                <h3>
+                    {{ incidents|selectattr('status', 'equalto', 'Open')|list|length }}
+                </h3>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow-sm p-3">
+                <h6>High / Critical</h6>
+                <h3>
+                    {{ incidents|selectattr('severity', 'in', ['High', 'Critical'])|list|length }}
+                </h3>
+            </div>
+        </div>
+    </div>
+
+    {% if incidents %}
+        {% for incident in incidents %}
+        <div class="card shadow-sm mb-4">
+            <div class="card-body">
+
+                <div class="d-flex justify-content-between align-items-start flex-wrap gap-2">
+                    <div>
+                        <h5 class="fw-bold mb-1">
+                            {{ incident.incident_type }}
+                        </h5>
+                        <small class="text-muted">
+                            ID: {{ incident.incident_id }}
+                        </small>
+                    </div>
+
+                    <div>
+                        <span class="badge bg-secondary">
+                            {{ incident.severity }}
+                        </span>
+                        <span class="badge bg-info text-dark">
+                            {{ incident.status }}
+                        </span>
+                    </div>
+                </div>
+
+                <hr>
+
+                <p>
+                    <strong>Scanner:</strong>
+                    {{ incident.scanner_type or incident.incident_type }}
+                </p>
+
+                <p>
+                    <strong>Affected Item:</strong>
+                    {{ incident.affected_item }}
+                </p>
+
+                <p>
+                    <strong>Date and Time:</strong>
+                    {{ incident.timestamp }}
+                </p>
+
+                <p class="mb-0">
+                    <strong>Findings:</strong>
+                </p>
+                <pre class="text-wrap mb-0">{{ incident.description }}</pre>
+
+            </div>
+        </div>
+        {% endfor %}
+    {% else %}
+        <div class="card shadow-sm p-5 text-center">
+            <h4>No incidents reported yet</h4>
+            <p class="text-muted mb-3">
+                Run any security scanner, then click Report Incident
+                on its result page to create a report automatically.
+            </p>
+            <a href="{{ url_for('main.dashboard') }}"
+               class="btn btn-primary">
+                Go to Dashboard
+            </a>
+        </div>
+    {% endif %}
+
+    <div class="alert alert-info mt-4">
+        Incident reports are temporary and intended for the current
+        browser session. They are not saved as permanent JSON files
+        by the automatic reporting feature.
+    </div>
+
+</div>
+{% endblock %}

@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+
+{% block title %}
+CyberShield AI - Email Security
+{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <div class="mb-4">
+
+        <a href="/" class="btn btn-outline-secondary">
+            ← Back to Dashboard
+        </a>
+
+    </div>
+
+
+    <div class="text-center mb-5">
+
+        <h1 class="fw-bold">
+            📧 Email Security Scanner
+        </h1>
+
+        <p class="text-muted">
+            Analyze email content for phishing,
+            suspicious links, credential requests
+            and other security indicators.
+        </p>
+
+    </div>
+
+
+    <div class="card shadow-sm p-4 mx-auto"
+         style="max-width: 850px;">
+
+        <form method="POST"
+              action="/scan-email">
+
+
+            <div class="mb-4">
+
+                <label class="form-label fw-bold">
+                    Sender Email
+                </label>
+
+                <input
+                    type="email"
+                    name="sender"
+                    class="form-control"
+                    placeholder="example@company.com"
+                >
+
+                <small class="text-muted">
+                    Optional
+                </small>
+
+            </div>
+
+
+            <div class="mb-4">
+
+                <label class="form-label fw-bold">
+                    Email Content
+                </label>
+
+                <textarea
+                    name="email_content"
+                    class="form-control"
+                    rows="12"
+                    placeholder="Paste the suspicious email content here..."
+                    required
+                ></textarea>
+
+            </div>
+
+
+            <button
+                type="submit"
+                class="btn btn-primary w-100">
+
+                🔍 Analyze Email
+
+            </button>
+
+        </form>
+
+
+        <div class="alert alert-info mt-4 mb-0">
+
+            <strong>Security:</strong>
+
+            CyberShield AI analyzes the email content locally.
+            The email is not sent to an external security service.
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

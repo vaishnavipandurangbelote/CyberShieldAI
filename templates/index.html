@@ -1,0 +1,261 @@
+{% extends "base.html" %}
+
+{% block title %}
+CyberShield AI - Security Dashboard
+{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid px-4 py-4">
+
+    <!-- Dashboard Header -->
+    <div class="dashboard-header mb-4">
+
+        <div>
+            <h1 class="fw-bold mb-1">Security Dashboard</h1>
+
+            <p class="text-muted mb-0">
+                Monitor and protect your digital security from one platform.
+            </p>
+        </div>
+
+        <div class="security-status">
+            <span class="status-dot"></span>
+            System Protected
+        </div>
+
+    </div>
+
+
+    <!-- Security Overview -->
+    <div class="row g-4 mb-4">
+
+        
+        <!-- Cyber Health -->
+        <div class="col-lg-4">
+
+            <div class="security-score-card">
+
+                <div>
+                    <p class="mb-1">Cyber Health Score</p>
+
+                    {% if cyber_health.score is not none %}
+                        <h2>{{ cyber_health.score }}/100</h2>
+
+                        <small>{{ cyber_health.label }}</small>
+
+                        <p class="small mt-2 mb-0">
+                            Scanners checked:
+                            {{ cyber_health.scanners_counted }}/{{ cyber_health.scanners_total }}
+                        </p>
+                    {% else %}
+                        <h2>--</h2>
+
+                        <small>
+                            Run security checks to calculate your score.
+                        </small>
+                    {% endif %}
+                </div>
+
+                <div class="score-circle">
+                    <span>
+                        {% if cyber_health.score is not none %}
+                            {{ cyber_health.score }}
+                        {% else %}
+                            --
+                        {% endif %}
+                    </span>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Security Overview -->
+        <div class="col-lg-8">
+
+            <div class="overview-card">
+
+                <h5>Security Overview</h5>
+
+                <div class="row text-center mt-3">
+
+                    <div class="col-4">
+
+                        <h3>{{ statistics.threats_detected }}</h3>
+
+                        <small>
+                            Threats Detected
+                        </small>
+
+                    </div>
+
+
+                    <div class="col-4">
+
+                        <h3>{{ statistics.total_scans }}</h3>
+
+                        <small>
+                            Scans Completed
+                        </small>
+
+                    </div>
+
+
+                    <div class="col-4">
+
+                        <h3>{{ statistics.threats_detected }}</h3>
+
+                        <small>
+                            Security Alerts
+                        </small>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    
+    <!-- Security Center -->
+    <div class="mb-4">
+        <h4 class="fw-bold mb-1">Security Center</h4>
+        <p class="text-muted mb-0">
+            Choose a security service to protect and analyze your digital security.
+        </p>
+    </div>
+
+    <div class="row g-4 justify-content-center">
+
+        <!-- 1. Malware & Antivirus Scanner -->
+        <div class="col-md-6 col-xl-4">
+            <div class="module-card h-100">
+                <div class="module-icon">🛡️</div>
+                <h5>Malware & Antivirus Scanner</h5>
+                <p>
+                    Scan files and folders for potential malware
+                    and suspicious characteristics.
+                </p>
+                <a href="{{ url_for('main.file_scanner') }}"
+                   class="btn btn-primary w-100 mt-auto">
+                    Open Malware Scanner
+                </a>
+            </div>
+        </div>
+
+        <!-- 2. URL & Phishing Scanner -->
+        <div class="col-md-6 col-xl-4">
+            <div class="module-card h-100">
+                <div class="module-icon">🌐</div>
+                <h5>URL & Phishing Scanner</h5>
+                <p>
+                    Analyze URLs for suspicious patterns and
+                    potential phishing indicators.
+                </p>
+                <a href="{{ url_for('main.url_scanner') }}"
+                   class="btn btn-primary w-100 mt-auto">
+                    Open URL Scanner
+                </a>
+            </div>
+        </div>
+
+        <!-- 3. Email Phishing Analyzer -->
+        <div class="col-md-6 col-xl-4">
+            <div class="module-card h-100">
+                <div class="module-icon">📧</div>
+                <h5>Email Phishing Analyzer</h5>
+                <p>
+                    Analyze email content and identify
+                    potentially suspicious indicators.
+                </p>
+                <a href="{{ url_for('main.email_security') }}"
+                   class="btn btn-primary w-100 mt-auto">
+                    Analyze Email
+                </a>
+            </div>
+        </div>
+
+        <!-- 4. Password Security Checker -->
+        <div class="col-md-6 col-xl-4">
+            <div class="module-card h-100">
+                <div class="module-icon">🔐</div>
+                <h5>Password Security Checker</h5>
+                <p>
+                    Evaluate password strength and identify
+                    common password weaknesses.
+                </p>
+                <a href="{{ url_for('main.password_security') }}"
+                   class="btn btn-primary w-100 mt-auto">
+                    Check Password
+                </a>
+            </div>
+        </div>
+
+        <!-- 5. Network Security Monitor -->
+        <div class="col-md-6 col-xl-4">
+            <div class="module-card h-100">
+                <div class="module-icon">📡</div>
+                <h5>Network Security Monitor</h5>
+                <p>
+                    Check selected local TCP ports and
+                    review potentially concerning services.
+                </p>
+                <a href="{{ url_for('main.network_security') }}"
+                   class="btn btn-primary w-100 mt-auto">
+                    Open Network Monitor
+                </a>
+            </div>
+        </div>
+
+        <!-- 6. Security Analytics -->
+        <div class="col-md-6 col-xl-4">
+            <div class="module-card h-100">
+                <div class="module-icon">📊</div>
+                <h5>Security Analytics</h5>
+                <p>
+                    View available security reports, findings
+                    and recorded security information.
+                </p>
+                <a href="{{ url_for('main.security_analytics') }}"
+                   class="btn btn-primary w-100 mt-auto">
+                    Open Security Analytics
+                </a>
+            </div>
+        </div>
+
+                <!-- 7. Incident Reporting -->
+        <div class="col-12 col-xl-12 mt-4">
+            <div class="module-card">
+                <div class="d-flex align-items-center mb-2">
+                    <div class="module-icon me-3 mb-0">🚨</div>
+                    <h5 class="mb-0">Incident Reporting</h5>
+                </div>
+                <p>
+                    Record security incidents, track ongoing system indicators, and generate structured incident reports for remediation.
+                </p>
+                <a href="{{ url_for('main.incident_reporting') }}"
+                   class="btn btn-primary mt-2">
+                    Reports
+                </a>
+            </div>
+        </div>
+
+
+    </div>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+{% endblock %}

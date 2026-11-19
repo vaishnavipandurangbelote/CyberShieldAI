@@ -1,0 +1,526 @@
+{% extends "base.html" %}
+
+{% block title %}
+CyberShield AI - Folder Scan Result
+{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <!-- Back Button -->
+    <div class="mb-4">
+
+        <a
+            href="/file-scanner"
+            class="btn btn-outline-secondary"
+        >
+            ← Back to Scanner
+        </a>
+
+    </div>
+
+
+    <!-- Page Heading -->
+    <div class="text-center mb-5">
+
+        <h1 class="fw-bold">
+            Folder Security Report
+        </h1>
+
+        <p class="text-muted">
+            CyberShield AI malware scanning report
+        </p>
+
+    </div>
+
+
+    {% if result.success %}
+
+
+    <!-- ==========================================
+         STATUS CARD
+         ========================================== -->
+
+    <div class="card shadow-sm mb-4">
+
+        <div class="card-body text-center p-4">
+
+            {% if result.risk == "High" %}
+
+                <div style="font-size: 55px;">
+                    🚨
+                </div>
+
+                <h2 class="fw-bold text-danger">
+                    Threats Detected
+                </h2>
+
+                <span class="badge bg-danger fs-6 px-3 py-2">
+                    HIGH RISK
+                </span>
+
+            {% else %}
+
+                <div style="font-size: 55px;">
+                    🛡️
+                </div>
+
+                <h2 class="fw-bold text-success">
+                    No Threats Detected
+                </h2>
+
+                <span class="badge bg-success fs-6 px-3 py-2">
+                    LOW RISK
+                </span>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ==========================================
+         FOLDER INFORMATION
+         ========================================== -->
+
+    <div class="card shadow-sm mb-4">
+
+        <div class="card-body">
+
+            <h5 class="fw-bold mb-3">
+                📁 Scan Information
+            </h5>
+
+            <p class="mb-2">
+
+                <strong>Folder:</strong>
+
+                <code>
+                    {{ result.folder }}
+                </code>
+
+            </p>
+
+            <p class="mb-0">
+
+                <strong>ClamAV Version:</strong>
+
+                {{ result.clamav_version }}
+
+            </p>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ==========================================
+         STATISTICS
+         ========================================== -->
+
+    <div class="row g-3 mb-4">
+
+
+        <!-- Files -->
+        <div class="col-md-3">
+
+            <div class="card shadow-sm h-100">
+
+                <div class="card-body text-center">
+
+                    <div style="font-size: 32px;">
+                        📄
+                    </div>
+
+                    <h3 class="fw-bold">
+                        {{ result.files_scanned }}
+                    </h3>
+
+                    <p class="text-muted mb-0">
+                        Files Scanned
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Directories -->
+        <div class="col-md-3">
+
+            <div class="card shadow-sm h-100">
+
+                <div class="card-body text-center">
+
+                    <div style="font-size: 32px;">
+                        📁
+                    </div>
+
+                    <h3 class="fw-bold">
+                        {{ result.directories_scanned }}
+                    </h3>
+
+                    <p class="text-muted mb-0">
+                        Directories
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Safe -->
+        <div class="col-md-3">
+
+            <div class="card shadow-sm h-100">
+
+                <div class="card-body text-center">
+
+                    <div style="font-size: 32px;">
+                        🟢
+                    </div>
+
+                    <h3 class="fw-bold text-success">
+                        {{ result.safe_files }}
+                    </h3>
+
+                    <p class="text-muted mb-0">
+                        Safe Files
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Threats -->
+        <div class="col-md-3">
+
+            <div class="card shadow-sm h-100">
+
+                <div class="card-body text-center">
+
+                    <div style="font-size: 32px;">
+                        🔴
+                    </div>
+
+                    <h3 class="fw-bold text-danger">
+                        {{ result.threats_detected }}
+                    </h3>
+
+                    <p class="text-muted mb-0">
+                        Threats
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ==========================================
+         THREAT DETAILS
+         ========================================== -->
+
+    {% if result.threats %}
+
+    <div class="card shadow-sm mb-4">
+
+        <div class="card-body">
+
+            <h5 class="fw-bold text-danger mb-3">
+                🚨 Detected Threats
+            </h5>
+
+
+            <div class="table-responsive">
+
+                <table class="table table-bordered align-middle">
+
+                    <thead class="table-danger">
+
+                        <tr>
+
+                            <th>
+                                File
+                            </th>
+
+                            <th>
+                                Detection
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                        {% for threat in result.threats %}
+
+                        <tr>
+
+                            <td>
+                                <code>
+                                    {{ threat.file }}
+                                </code>
+                            </td>
+
+                            <td>
+
+                                <span class="badge bg-danger">
+
+                                    {{ threat.detection }}
+
+                                </span>
+
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    {% endif %}
+
+
+    <!-- ==========================================
+         AI THREAT ANALYSIS & RECOMMENDATIONS
+         ========================================== -->
+
+    {% if result.ai_result %}
+
+    <div class="card shadow-sm mb-4">
+
+        <div class="card-body">
+
+            <h5 class="fw-bold mb-3">
+                🤖 AI Threat Analysis
+            </h5>
+
+            <p>
+                <strong>Threat Level:</strong>
+
+                {% if result.ai_result.threat_level == "Critical" %}
+                    <span class="badge bg-danger">Critical</span>
+                {% elif result.ai_result.threat_level == "High" %}
+                    <span class="badge bg-danger">High</span>
+                {% elif result.ai_result.threat_level == "Low" %}
+                    <span class="badge bg-success">Low</span>
+                {% else %}
+                    <span class="badge bg-secondary">Unknown</span>
+                {% endif %}
+            </p>
+
+            <p>
+                <strong>Priority:</strong>
+                {{ result.ai_result.priority }}
+            </p>
+
+            <p>
+                <strong>Threat Score:</strong>
+                {{ result.ai_result.threat_score }}/100
+            </p>
+
+            <div class="progress mb-3" role="progressbar"
+                 aria-label="Threat score"
+                 aria-valuenow="{{ result.ai_result.threat_score }}"
+                 aria-valuemin="0"
+                 aria-valuemax="100">
+
+                <div class="progress-bar
+                    {% if result.ai_result.threat_score >= 70 %}
+                        bg-danger
+                    {% elif result.ai_result.threat_score >= 30 %}
+                        bg-warning
+                    {% else %}
+                        bg-success
+                    {% endif %}"
+                    style="width: {{ result.ai_result.threat_score }}%;">
+                </div>
+
+            </div>
+
+            <p>
+                <strong>Analysis:</strong>
+                {{ result.ai_result.summary }}
+            </p>
+
+            <hr>
+
+            <h6 class="fw-bold">
+                🛡️ Security Recommendations
+            </h6>
+
+            <ul class="mb-0">
+                {% for recommendation in result.ai_result.recommendations %}
+                    <li class="mb-2">{{ recommendation }}</li>
+                {% endfor %}
+            </ul>
+
+            <p class="text-muted small mt-3 mb-0">
+                This analysis uses rule-based logic and ClamAV scan results.
+                A low score does not guarantee that every file is safe.
+            </p>
+
+        </div>
+
+    </div>
+
+    {% endif %}
+
+
+    <!-- ==========================================
+         SCAN DETAILS
+         ========================================== -->
+
+    <div class="card shadow-sm mb-4">
+
+        <div class="card-body">
+
+            <h5 class="fw-bold mb-3">
+                🔍 Scan Details
+            </h5>
+
+            <div class="row">
+
+                <div class="col-md-6">
+
+                    <p>
+
+                        <strong>
+                            Scan Status:
+                        </strong>
+
+                        {{ result.status }}
+
+                    </p>
+
+                </div>
+
+
+                <div class="col-md-6">
+
+                    <p>
+
+                        <strong>
+                            Scan Time:
+                        </strong>
+
+                        {{ result.scan_time }} seconds
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ==========================================
+         ACTIONS
+         ========================================== -->
+
+    <div class="text-center">
+
+        <a
+            href="/file-scanner"
+            class="btn btn-primary px-4"
+        >
+            🔍 Scan Another File / Folder
+        </a>
+
+        <a
+            href="/"
+            class="btn btn-outline-secondary px-4 ms-2"
+        >
+            ← Dashboard
+        </a>
+
+    </div>
+
+        <!-- REPORT INCIDENT -->
+    <div class="card shadow-sm p-4 mt-4 text-center">
+        <h4 class="fw-bold mb-2">🚨 Report Security Incident</h4>
+        <p class="text-muted">
+            Create an incident report from this folder scan.
+        </p>
+
+        <form method="POST" action="{{ url_for('main.report_incident') }}">
+            <input type="hidden" name="affected_item"
+                   value="{{ result.folder }}">
+
+            <button type="submit" class="btn btn-danger">
+                Report Incident
+            </button>
+        </form>
+    </div>
+
+
+    {% else %}
+
+
+    <!-- ==========================================
+         ERROR
+         ========================================== -->
+
+    <div class="card shadow-sm">
+
+        <div class="card-body text-center p-5">
+
+            <div style="font-size: 50px;">
+                ⚠️
+            </div>
+
+            <h3 class="fw-bold text-danger mt-3">
+                Scan Could Not Be Completed
+            </h3>
+
+            <p class="text-muted">
+                {{ result.message }}
+            </p>
+
+            <a
+                href="/file-scanner"
+                class="btn btn-primary"
+            >
+                Try Again
+            </a>
+
+        </div>
+
+    </div>
+
+
+    {% endif %}
+
+</div>
+
+{% endblock %}
