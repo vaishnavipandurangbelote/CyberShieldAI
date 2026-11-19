@@ -132,9 +132,6 @@ http://127.0.0.1:5000/
 - Enhance security analytics and visualization.
 - Introduce additional security monitoring features.
 
-## ⚠️ Disclaimer
-
-CyberShield AI is an educational project developed for cybersecurity learning and demonstration purposes. Its scan results should not be considered a replacement for professional antivirus software or a comprehensive security audit.
 
 ## 👩‍💻 Developer
 
